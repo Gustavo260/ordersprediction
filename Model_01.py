@@ -16,7 +16,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, roc_curve, precision_recall_curve
 
 # Cargar el conjunto de datos
-data = pd.read_csv('E:/Bismack-D/UNIVERSIDAD Adolfo Ibañez/07- Cloud Computing 1/Clase4/creditcard.csv')
+data = pd.read_csv('E:/Bismack-D/UNIVERSIDAD Adolfo Ibañez/07- Cloud Computing 1/Trabajo01/ordersprediction/dataset_orders.csv')
 
 # Exploración inicial de los datos
 print("Primeras filas del conjunto de datos:")
@@ -24,15 +24,20 @@ print(data.head())
 print("\nDescripción estadística:")
 print(data.describe())
 print("\nDistribución de la variable objetivo:")
-print(data['Class'].value_counts())
+print(data['file'].value_counts())
 
 # Verificar valores nulos
 print("\nValores nulos en cada columna:")
 print(data.isnull().sum())
 
+# MANEJO DE VALORES NaN - CORRECCIÓN
+# Eliminar filas con valores NaN en las características
+data_clean = data.dropna()
+print(f"\nDatos después de eliminar NaN: {data_clean.shape}")
+
 # Separar características y variable objetivo
-X = data.drop('Class', axis=1)
-y = data['Class']
+X = data_clean.drop('file', axis=1)
+y = data_clean['file']
 
 # Dividir los datos en conjuntos de entrenamiento y prueba con estratificación debido al desbalance
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
@@ -124,4 +129,3 @@ plt.ylabel('Tasa de Verdaderos Positivos')
 plt.title('Curva ROC - Bosque Aleatorio')
 plt.legend()
 plt.show()
-

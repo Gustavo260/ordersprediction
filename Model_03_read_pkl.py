@@ -10,9 +10,15 @@ with open('scaler.pkl', 'rb') as archivo_scaler:
     scaler = pickle.load(archivo_scaler)
 
 # Lista de características en el orden esperado por el modelo
-columnas = ['Time', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10',
-            'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20',
-            'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'Amount']
+columnas = ['order', 'quotations.prices.estimated', 'quotations.prices.final',
+       'quotation', 'mins_to_register', 'mins_to_quote',
+       'mins_to_reply', 'mins_to_file', 'mins_to_travel', 'totalMins',
+       'marketCode_2H', 'marketCode_2J', 'marketCode_2M', 'marketCode_3N',
+       'marketCode_3O', 'marketCode_3P', 'marketCode_HB', 'typeCode_1',
+       'typeCode_2', 'typeCode_3', 'typeCode_4', 'typeCode_5', 'typeCode_6',
+       'typeCode_7', 'typeCode_8', 'productCode_1', 'productCode_2',
+       'productCode_3', 'productCode_4', 'productCode_5', 'departure_day',
+       'departure_month']
 
 # Crear una lista para almacenar los valores ingresados por el usuario
 valores_usuario = []
@@ -41,8 +47,8 @@ probabilidad = modelo.predict_proba(nueva_muestra_scaled)[:, 1]
 
 # Mostrar el resultado al usuario
 if prediccion[0] == 1:
-    print("\n*** Alerta: La transacción es FRAUDULENTA ***")
+    print("\n*** Mensaje: Es probable que la cotización sea aprobada y concretada en un File :) ***")
 else:
-    print("\nLa transacción es legítima.")
+    print("\n.La cotización será rechazada :/")
 
-print(f"Probabilidad de fraude: {probabilidad[0]:.4f}")
+print(f"Probabilidad de aceptación: {probabilidad[0]:.4f}")

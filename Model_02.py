@@ -17,11 +17,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, roc_curve, precision_recall_curve
 
 # Cargar el conjunto de datos
-data = pd.read_csv('E:/Bismack-D/UNIVERSIDAD Adolfo Ibañez/07- Cloud Computing 1/Clase4/creditcard.csv')
+data = pd.read_csv('E:/Bismack-D/UNIVERSIDAD Adolfo Ibañez/07- Cloud Computing 1/Trabajo01/ordersprediction/dataset_orders.csv')
 
 # Separar características y variable objetivo
-X = data.drop('Class', axis=1)
-y = data['Class']
+X = data.drop('file', axis=1)
+y = data['file']
 
 # Dividir los datos en conjuntos de entrenamiento y prueba con estratificación debido al desbalance
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
