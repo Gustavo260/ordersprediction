@@ -12,10 +12,15 @@ with open('scaler.pkl', 'rb') as archivo_scaler:
     scaler = pickle.load(archivo_scaler)
 
 # Definir las características esperadas
-columnas = ['Time', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10',
-            'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V18', 'V19', 'V20',
-            'V21', 'V22', 'V23', 'V24', 'V25', 'V26', 'V27', 'V28', 'Amount']
-
+columnas = ['order', 'quotations.prices.estimated', 'quotations.prices.final',
+       'quotation', 'mins_to_register', 'mins_to_quote',
+       'mins_to_reply', 'mins_to_file', 'mins_to_travel', 'totalMins',
+       'marketCode_2H', 'marketCode_2J', 'marketCode_2M', 'marketCode_3N',
+       'marketCode_3O', 'marketCode_3P', 'marketCode_HB', 'typeCode_1',
+       'typeCode_2', 'typeCode_3', 'typeCode_4', 'typeCode_5', 'typeCode_6',
+       'typeCode_7', 'typeCode_8', 'productCode_1', 'productCode_2',
+       'productCode_3', 'productCode_4', 'productCode_5', 'departure_day',
+       'departure_month']
 # Crear la aplicación FastAPI
 app = FastAPI(title="Detección de Fraude en Transacciones")
 
