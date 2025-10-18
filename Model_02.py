@@ -17,7 +17,12 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, roc_curve, precision_recall_curve
 
 # Cargar el conjunto de datos
-data = pd.read_csv('E:/Bismack-D/UNIVERSIDAD Adolfo Ibañez/07- Cloud Computing 1/Trabajo01/ordersprediction/dataset_orders.csv')
+data = pd.read_csv('dataset_orders.csv')
+
+data = data.rename(columns={
+    'quotations.prices.estimated': 'quotations_prices_estimated',
+    'quotations.prices.final': 'quotations_prices_final'
+})
 
 # Separar características y variable objetivo
 X = data.drop('file', axis=1)

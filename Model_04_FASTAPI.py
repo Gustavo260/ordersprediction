@@ -12,7 +12,7 @@ with open('scaler.pkl', 'rb') as archivo_scaler:
     scaler = pickle.load(archivo_scaler)
 
 # Definir las características esperadas
-columnas = ['order', 'quotations.prices.estimated', 'quotations.prices.final',
+columnas = ['order', 'quotations_prices_estimated', 'quotations_prices_final',
        'quotation', 'mins_to_register', 'mins_to_quote',
        'mins_to_reply', 'mins_to_file', 'mins_to_travel', 'totalMins',
        'marketCode_2H', 'marketCode_2J', 'marketCode_2M', 'marketCode_3N',
@@ -22,44 +22,46 @@ columnas = ['order', 'quotations.prices.estimated', 'quotations.prices.final',
        'productCode_3', 'productCode_4', 'productCode_5', 'departure_day',
        'departure_month']
 # Crear la aplicación FastAPI
-app = FastAPI(title="Detección de Fraude en Transacciones")
+app = FastAPI(title="Determinar si una cotización pueda o no ser aceptada")
 
 # Definir el modelo de datos de entrada utilizando Pydantic
 class Transaccion(BaseModel):
-    Time: float
-    V1: float
-    V2: float
-    V3: float
-    V4: float
-    V5: float
-    V6: float
-    V7: float
-    V8: float
-    V9: float
-    V10: float
-    V11: float
-    V12: float
-    V13: float
-    V14: float
-    V15: float
-    V16: float
-    V17: float
-    V18: float
-    V19: float
-    V20: float
-    V21: float
-    V22: float
-    V23: float
-    V24: float
-    V25: float
-    V26: float
-    V27: float
-    V28: float
-    Amount: float
+    order: float
+    quotations_prices_estimated: float
+    quotations_prices_final: float
+    quotation: float
+    mins_to_register: float
+    mins_to_quote: float
+    mins_to_reply: float
+    mins_to_file: float
+    mins_to_travel: float
+    totalMins: float
+    marketCode_2H: float
+    marketCode_2J: float
+    marketCode_2M: float
+    marketCode_3N: float
+    marketCode_3O: float
+    marketCode_3P: float
+    marketCode_HB: float
+    typeCode_1: float
+    typeCode_2: float
+    typeCode_3: float
+    typeCode_4: float
+    typeCode_5: float
+    typeCode_6: float
+    typeCode_7: float
+    typeCode_8: float
+    productCode_1: float
+    productCode_2: float
+    productCode_3: float
+    productCode_4: float
+    productCode_5: float
+    departure_day: float
+    departure_month: float
 
 # Definir el endpoint para predicción
 @app.post("/prediccion/")
-async def predecir_fraude(transaccion: Transaccion):
+async def predecir_cotizacion(transaccion: Transaccion):
     try:
         # Convertir la entrada en un DataFrame
         datos_entrada = pd.DataFrame([transaccion.dict()], columns=columnas)
@@ -73,8 +75,8 @@ async def predecir_fraude(transaccion: Transaccion):
         
         # Construir la respuesta
         resultado = {
-            "EsFraude": bool(prediccion[0]),
-            "ProbabilidadFraude": float(probabilidad[0])
+            "Probabilidad de que la cotización SI sea aceptada": bool(prediccion[0]),
+            "Probabilidad de que la cotización NO sea aceptada": float(probabilidad[0])
         }
         
         return resultado

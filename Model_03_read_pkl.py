@@ -10,7 +10,7 @@ with open('scaler.pkl', 'rb') as archivo_scaler:
     scaler = pickle.load(archivo_scaler)
 
 # Lista de características en el orden esperado por el modelo
-columnas = ['order', 'quotations.prices.estimated', 'quotations.prices.final',
+columnas = ['order', 'quotations_prices_estimated', 'quotations_prices_final',
        'quotation', 'mins_to_register', 'mins_to_quote',
        'mins_to_reply', 'mins_to_file', 'mins_to_travel', 'totalMins',
        'marketCode_2H', 'marketCode_2J', 'marketCode_2M', 'marketCode_3N',
