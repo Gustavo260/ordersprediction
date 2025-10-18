@@ -19,6 +19,7 @@ from sklearn.metrics import classification_report, confusion_matrix, roc_auc_sco
 # Cargar el conjunto de datos
 data = pd.read_csv('dataset_orders.csv')
 
+# Se limpia variables de los puntos
 data = data.rename(columns={
     'quotations.prices.estimated': 'quotations_prices_estimated',
     'quotations.prices.final': 'quotations_prices_final'
