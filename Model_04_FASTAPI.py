@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
-from fastapi.responses import RedirectResponse
+from fastapi.responses import JSONResponse, RedirectResponse
 from pydantic import BaseModel
 import pickle
 import numpy as np
@@ -25,10 +24,13 @@ columnas = [
     'productCode_4', 'productCode_5', 'departure_day', 'departure_month'
 ]
 
-# Crear la aplicación FastAPI
 app = FastAPI(title="Determinar si una cotización pueda o no ser aceptada")
 
-# Definir el modelo de datos de entrada utilizando Pydantic
+# Redirección a la documentación
+#@app.get("/")
+#def redirect_to_docs():
+    #return RedirectResponse(url="/docs")
+
 class Transaccion(BaseModel):
     order: float
     quotations_prices_estimated: float
@@ -62,32 +64,30 @@ class Transaccion(BaseModel):
     productCode_5: float
     departure_day: float
     departure_month: float
-    
-@app.get("/")
-def redirect_to_docs():
-    return RedirectResponse(url="/docs")
 
-# Definir el endpoint para predicción
 @app.post("/prediccion/")
 async def predecir_cotizacion(transaccion: Transaccion):
     try:
-        # Convertir la entrada en un DataFrame
-        datos_entrada = pd.DataFrame([transaccion.dict()], columns=columnas)
+        # DataFrame con el orden exacto de columnas
+        df = pd.DataFrame([transaccion.dict()], columns=columnas)
 
-        # Escalar las características
-        datos_entrada_scaled = scaler.transform(datos_entrada)
+        # Escalado
+        X_scaled = scaler.transform(df)
 
-        # Realizar la predicción
-        prediccion = modelo.predict(datos_entrada_scaled)
-        probabilidad = modelo.predict_proba(datos_entrada_scaled)[:, 1]
+        # Predicción y probabilidad clase positiva (SI aceptada)
+        y_pred = modelo.predict(X_scaled)[0]
+        p_si = float(modelo.predict_proba(X_scaled)[:, 1][0]) * 100
+        p_no = 100 - p_si
 
-        # Construir la respuesta
+        # Formateo a 2 decimales COMO STRING para evitar enteros tipo 0/1
+        p_si_str = f"{p_si:.1f}%"
+        p_no_str = f"{p_no:.1f}%"
+
         resultado = {
-            "Probabilidad de que la cotización SI sea aceptada": bool(prediccion[0]),
-            "Probabilidad de que la cotización NO sea aceptada": float(probabilidad[0])
+            "Resultado": "Se acepta" if bool(y_pred) else "No se acepta",
+            "Probabilidad de que la cotización SI sea aceptada": p_si_str,
+            "Probabilidad de que la cotización NO sea aceptada": p_no_str
         }
-
-        # Retornar el resultado directamente en formato JSON
         return JSONResponse(content=resultado)
 
     except Exception as e:
