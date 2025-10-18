@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel
 import pickle
 import numpy as np
@@ -61,6 +62,10 @@ class Transaccion(BaseModel):
     productCode_5: float
     departure_day: float
     departure_month: float
+    
+@app.get("/")
+def redirect_to_docs():
+    return RedirectResponse(url="/docs")
 
 # Definir el endpoint para predicción
 @app.post("/prediccion/")
