@@ -92,91 +92,99 @@ Link de acceso a la app: https://ordersprediction-cc.onrender.com/docs
 
 
 
-Ejemplo de entrada:
+Ejemplo de entrada (Aceptado):
 
 {
-
-&nbsp; "order": 4,
-
-&nbsp; "quotations\_prices\_estimated": 778,
-
-&nbsp; "quotations\_prices\_final": 777,
-
-&nbsp; "quotation": 4,
-
-&nbsp; "mins\_to\_register": 0,
-
-&nbsp; "mins\_to\_quote": 23,
-
-&nbsp; "mins\_to\_reply": 23,
-
-&nbsp; "mins\_to\_file": 5,
-
-&nbsp; "mins\_to\_travel": 0,
-
-&nbsp; "totalMins": 0,
-
-&nbsp; "marketCode\_2H": 0,
-
-&nbsp; "marketCode\_2J": 0,
-
-&nbsp; "marketCode\_2M": 0,
-
-&nbsp; "marketCode\_3N": 0,
-
-&nbsp; "marketCode\_3O": 0,
-
-&nbsp; "marketCode\_3P": 0,
-
-&nbsp; "marketCode\_HB": 0,
-
-&nbsp; "typeCode\_1": 0,
-
-&nbsp; "typeCode\_2": 0,
-
-&nbsp; "typeCode\_3": 0,
-
-&nbsp; "typeCode\_4": 0,
-
-&nbsp; "typeCode\_5": 0,
-
-&nbsp; "typeCode\_6": 0,
-
-&nbsp; "typeCode\_7": 0,
-
-&nbsp; "typeCode\_8": 0,
-
-&nbsp; "productCode\_1": 0,
-
-&nbsp; "productCode\_2": 0,
-
-&nbsp; "productCode\_3": 0,
-
-&nbsp; "productCode\_4": 0,
-
-&nbsp; "productCode\_5": 0,
-
-&nbsp; "departure\_day": 6,
-
-&nbsp; "departure\_month": 12
-
+  "order": 4,
+  "quotations_prices_estimated": 778,
+  "quotations_prices_final": 777,
+  "quotation": 4,
+  "mins_to_register": 0,
+  "mins_to_quote": 23,
+  "mins_to_reply": 23,
+  "mins_to_file": 5,
+  "mins_to_travel": 0,
+  "totalMins": 0,
+  "marketCode_2H": 0,
+  "marketCode_2J": 0,
+  "marketCode_2M": 0,
+  "marketCode_3N": 0,
+  "marketCode_3O": 0,
+  "marketCode_3P": 0,
+  "marketCode_HB": 0,
+  "typeCode_1": 0,
+  "typeCode_2": 0,
+  "typeCode_3": 0,
+  "typeCode_4": 0,
+  "typeCode_5": 0,
+  "typeCode_6": 0,
+  "typeCode_7": 0,
+  "typeCode_8": 0,
+  "productCode_1": 0,
+  "productCode_2": 0,
+  "productCode_3": 0,
+  "productCode_4": 0,
+  "productCode_5": 0,
+  "departure_day": 6,
+  "departure_month": 12
 }
-
 
 
 Ejemplo de salida:
 
 {
-
-&nbsp; "Resultado": "Se acepta",
-
-&nbsp; "Probabilidad de que la cotización SI sea aceptada": "66.0%",
-
-&nbsp; "Probabilidad de que la cotización NO sea aceptada": "34.0%"
-
+  "Resultado": "Aprobado",
+  "Probabilidad de que la cotización SI sea aceptada": "65.98%",
+  "Probabilidad de que la cotización NO sea aceptada": "34.02%"
 }
 
 
+
+Ejemplo de entrada (Rechazado) (Bajamos el price_final a 700):
+
+{
+  "order": 4,
+  "quotations_prices_estimated": 778,
+  "quotations_prices_final": 700,
+  "quotation": 4,
+  "mins_to_register": 0,
+  "mins_to_quote": 23,
+  "mins_to_reply": 23,
+  "mins_to_file": 5,
+  "mins_to_travel": 0,
+  "totalMins": 0,
+  "marketCode_2H": 0,
+  "marketCode_2J": 0,
+  "marketCode_2M": 0,
+  "marketCode_3N": 0,
+  "marketCode_3O": 0,
+  "marketCode_3P": 0,
+  "marketCode_HB": 0,
+  "typeCode_1": 0,
+  "typeCode_2": 0,
+  "typeCode_3": 0,
+  "typeCode_4": 0,
+  "typeCode_5": 0,
+  "typeCode_6": 0,
+  "typeCode_7": 0,
+  "typeCode_8": 0,
+  "productCode_1": 0,
+  "productCode_2": 0,
+  "productCode_3": 0,
+  "productCode_4": 0,
+  "productCode_5": 0,
+  "departure_day": 6,
+  "departure_month": 12
+}
+
+
+Ejemplo de salida:
+
+{
+  "Resultado": "Rechazado",
+  "Probabilidad de que la cotización SI sea aceptada": "49.05%",
+  "Probabilidad de que la cotización NO sea aceptada": "50.95%"
+}
 
 Notas finales
 

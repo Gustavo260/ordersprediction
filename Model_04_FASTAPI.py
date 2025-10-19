@@ -68,26 +68,30 @@ class Transaccion(BaseModel):
 @app.post("/prediccion/")
 async def predecir_cotizacion(transaccion: Transaccion):
     try:
-        # DataFrame con el orden exacto de columnas
-        df = pd.DataFrame([transaccion.dict()], columns=columnas)
+        # Convertir la entrada en un DataFrame (mismo orden de columnas)
+        datos_entrada = pd.DataFrame([transaccion.dict()], columns=columnas)
 
-        # Escalado
-        X_scaled = scaler.transform(df)
+        # Escalar las características
+        datos_entrada_scaled = scaler.transform(datos_entrada)
 
-        # Predicción y probabilidad clase positiva (SI aceptada)
-        y_pred = modelo.predict(X_scaled)[0]
-        p_si = float(modelo.predict_proba(X_scaled)[:, 1][0]) * 100
-        p_no = 100 - p_si
+        # Probabilidades del modelo
+        # p_si = P(clase=1 = "SI aceptada")
+        p_si = float(modelo.predict_proba(datos_entrada_scaled)[:, 1][0])
+        p_no = 1.0 - p_si
 
-        # Formateo a 2 decimales COMO STRING para evitar enteros tipo 0/1
-        p_si_str = f"{p_si:.1f}%"
-        p_no_str = f"{p_no:.1f}%"
+        # Decisión basada en la probabilidad (umbral 0.5) para mantener coherencia con lo reportado
+        resultado_texto = "Aprobado" if p_si >= 0.5 else "Rechazado"
+
+        # Formateo como porcentaje con 2 decimales
+        p_si_pct = f"{p_si * 100:.2f}%"
+        p_no_pct = f"{p_no * 100:.2f}%"
 
         resultado = {
-            "Resultado": "Se acepta" if bool(y_pred) else "No se acepta",
-            "Probabilidad de que la cotización SI sea aceptada": p_si_str,
-            "Probabilidad de que la cotización NO sea aceptada": p_no_str
+            "Resultado": resultado_texto,
+            "Probabilidad de que la cotización SI sea aceptada": p_si_pct,
+            "Probabilidad de que la cotización NO sea aceptada": p_no_pct
         }
+
         return JSONResponse(content=resultado)
 
     except Exception as e:
